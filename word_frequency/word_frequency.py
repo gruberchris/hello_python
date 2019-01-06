@@ -1,7 +1,8 @@
 import operator
 import sys
+import time
 
-def get_words_counts(words):
+def get_word_counts(words):
     unimportant_words = ('the', 'is', 'as', 'then', 'that', 'a', 'an', 'of', 'are', 'and', 'at', 'in', 'to', 'with', 'on', 'but', 'by')
     word_counts = {}
     unimportant_word_counts = {}
@@ -28,8 +29,14 @@ def get_n_most_frequent(word_counts, n):
 if len(sys.argv) == 3:
     number_of_most_frequent_words = int(sys.argv[1])
     document_string = sys.argv[2]
-    word_counts, unimportant_word_counts = get_words_counts(document_string)
+
+    startTime = time.time()
+    word_counts, unimportant_word_counts = get_word_counts(document_string)
+    print("Counting words took %f seconds" % (time.time() - startTime))
+
+    startTime = time.time()
     most_frequent_words = get_n_most_frequent(word_counts, number_of_most_frequent_words)
+    print("Getting top %d words took %f seconds" % (number_of_most_frequent_words, time.time() - startTime))
 
     print(word_counts)
     print(unimportant_word_counts)
