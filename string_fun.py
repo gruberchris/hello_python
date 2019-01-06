@@ -11,6 +11,7 @@ def greet_world(greeting):
     greeting = greeting.swapcase()
     print(greeting)
 
+    # Reverse string using a list (array)
     greeting_array = [x for x in greeting]
     print(greeting_array)
     greeting_array.reverse()
@@ -18,11 +19,8 @@ def greet_world(greeting):
     greeting = "".join(greeting_array)
     print(greeting)
 
-    greeting_array = [x for x in greeting]
-    print(greeting_array)
-    greeting_array.reverse()
-    print(greeting_array)
-    greeting = "".join(greeting_array)
+    # Reverse string again but this time using extended slice
+    greeting = greeting[::-1]
     print(greeting)
 
     greeting_length = len(greeting)
