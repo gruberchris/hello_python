@@ -4,27 +4,29 @@ import sys
 import time
 
 
-def create_or_update_word(word, word_dictionary):
-    if word in word_dictionary:
-        word_dictionary[word] = word_dictionary[word] + 1
-    else:
-        word_dictionary[word] = 1
-
-
 def get_word_counts(words, ignored_words):
     word_counts = {}
+
+    reversed_ignored_words = sorted(ignored_words, reverse=True)
 
     for word in words.split():
         processed_word = word.lstrip('([!,.?:;-)]')
         processed_word = processed_word.rstrip('([!,.?:;-)]')
         processed_word = processed_word.lower()
 
+        if len(processed_word) == 0:
+            continue
+
         if processed_word in word_counts:
             word_counts[processed_word] = word_counts[processed_word] + 1
             continue
 
-        if processed_word not in ignored_words:
-            create_or_update_word(processed_word, word_counts)
+        if processed_word[0] in ['n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']:
+            if processed_word not in reversed_ignored_words:
+                word_counts[processed_word] = 1
+        else:
+            if processed_word not in ignored_words:
+                word_counts[processed_word] = 1
 
     return word_counts.items()
 
