@@ -6,8 +6,11 @@ import time
 
 def get_word_counts(words, ignored_words):
     word_counts = {}
+    ignored_words_dict = {}
 
-    reversed_ignored_words = sorted(ignored_words, reverse=True)
+    # optimal to make a dictionary from the ignored words list
+    for ignored_word in ignored_words:
+        ignored_words_dict[ignored_word] = ignored_word
 
     for word in words.split():
         processed_word = word.lstrip('([!,.?:;-)]')
@@ -21,12 +24,8 @@ def get_word_counts(words, ignored_words):
             word_counts[processed_word] = word_counts[processed_word] + 1
             continue
 
-        if processed_word[0] in ['n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']:
-            if processed_word not in reversed_ignored_words:
-                word_counts[processed_word] = 1
-        else:
-            if processed_word not in ignored_words:
-                word_counts[processed_word] = 1
+        if processed_word not in ignored_words_dict:
+            word_counts[processed_word] = 1
 
     return word_counts.items()
 
