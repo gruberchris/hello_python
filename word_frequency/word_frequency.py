@@ -3,11 +3,13 @@ import re
 import sys
 import time
 
+
 def create_or_update_word(word, word_dictionary):
     if word in word_dictionary:
         word_dictionary[word] = word_dictionary[word] + 1
     else:
         word_dictionary[word] = 1
+
 
 def get_word_counts(words, ignored_words):
     word_counts = {}
@@ -25,8 +27,10 @@ def get_word_counts(words, ignored_words):
 
     return (word_counts.items(), unimportant_word_counts.items())
 
+
 def get_n_most_frequent(word_counts, n):
     return sorted(word_counts, key=operator.itemgetter(1), reverse=True)[:n]
+
 
 def start():
     number_of_most_frequent_words = 1
@@ -69,6 +73,7 @@ def start():
     # print(word_counts)
     # print(unimportant_word_counts)
     print(most_frequent_words)
+
 
 # example to run, "python3 word_frequency.py 10 usa-constitution.txt unimportant_words.txt
 start()
