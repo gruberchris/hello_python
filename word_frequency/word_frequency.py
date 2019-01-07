@@ -26,23 +26,36 @@ def get_word_counts(words, ignored_words):
 def get_n_most_frequent(word_counts, n):
     return sorted(word_counts, key=operator.itemgetter(1), reverse=True)[:n]
 
-if len(sys.argv) == 4:
-    number_of_most_frequent_words = int(sys.argv[1])
-    text_file_name = sys.argv[2]
-    ignored_words_file_name = sys.argv[3]
-    document_string = ''
+def start():
     ignored_words = []
 
-    with open(text_file_name) as file_object:
-        document_string = file_object.read()
-        document_string = re.sub('[^!-~]+', ' ', document_string).strip()
+    if len(sys.argv) >= 2:
+        number_of_most_frequent_words = int(sys.argv[1])
 
-    with open(ignored_words_file_name) as file_object:
-        ignored_words_string = file_object.read()
-        ignored_words = ignored_words_string.split('\n')
+    if len(sys.argv) >= 3:
+        input_file_name = sys.argv[2]
+
+        try:
+            with open(input_file_name) as file_object:
+                raw_document_text = file_object.read()
+                document_text = re.sub('[^!-~]+', ' ', raw_document_text).strip()
+        except FileNotFoundError:
+            print('The specified input file %s does not exist' % (input_file_name))
+            return
+
+    if len(sys.argv) == 4:
+        ignored_words_file_name = sys.argv[3]
+
+        try:
+            with open(ignored_words_file_name) as file_object:
+                raw_document_text = file_object.read()
+                ignored_words = raw_document_text.split('\n')
+        except FileNotFoundError:
+            print('The specified ignored words file %s does not exist' % (ignored_words_file_name))
+            return
 
     startTime = time.time()
-    word_counts, unimportant_word_counts = get_word_counts(document_string, ignored_words)
+    word_counts, unimportant_word_counts = get_word_counts(document_text, ignored_words)
     print("Counting words took %f seconds" % (time.time() - startTime))
 
     startTime = time.time()
@@ -52,3 +65,5 @@ if len(sys.argv) == 4:
     # print(word_counts)
     # print(unimportant_word_counts)
     print(most_frequent_words)
+
+start()
