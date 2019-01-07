@@ -68,4 +68,5 @@ def start():
     # print(unimportant_word_counts)
     print(most_frequent_words)
 
+# example to run, "python3 word_frequency.py 10 usa-constitution.txt unimportant_words.txt
 start()
