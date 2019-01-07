@@ -13,19 +13,20 @@ def create_or_update_word(word, word_dictionary):
 
 def get_word_counts(words, ignored_words):
     word_counts = {}
-    unimportant_word_counts = {}
 
     for word in words.split():
         processed_word = word.lstrip('([!,.?:;-)]')
         processed_word = processed_word.rstrip('([!,.?:;-)]')
         processed_word = processed_word.lower()
 
+        if processed_word in word_counts:
+            word_counts[processed_word] = word_counts[processed_word] + 1
+            continue
+
         if processed_word not in ignored_words:
             create_or_update_word(processed_word, word_counts)
-        else:
-            create_or_update_word(processed_word, unimportant_word_counts)
 
-    return (word_counts.items(), unimportant_word_counts.items())
+    return word_counts.items()
 
 
 def get_n_most_frequent(word_counts, n):
@@ -63,7 +64,7 @@ def start():
             return
 
     startTime = time.time()
-    word_counts, unimportant_word_counts = get_word_counts(document_text, ignored_words)
+    word_counts = get_word_counts(document_text, ignored_words)
     print("Counting words took %f seconds" % (time.time() - startTime))
 
     startTime = time.time()
@@ -71,7 +72,6 @@ def start():
     print("Getting top %d words took %f seconds" % (number_of_most_frequent_words, time.time() - startTime))
 
     # print(word_counts)
-    # print(unimportant_word_counts)
     print(most_frequent_words)
 
 
