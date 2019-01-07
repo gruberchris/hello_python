@@ -13,7 +13,7 @@ def get_word_counts(words, ignored_words):
     word_counts = {}
     unimportant_word_counts = {}
 
-    for word in words.split(' '):
+    for word in words.split():
         processed_word = word.rstrip('!,.?:;-').lower()
 
         if processed_word not in ignored_words:
@@ -31,7 +31,7 @@ if len(sys.argv) == 4:
     text_file_name = sys.argv[2]
     ignored_words_file_name = sys.argv[3]
     document_string = ''
-    ignored_words_string = ''
+    ignored_words = []
 
     with open(text_file_name) as file_object:
         document_string = file_object.read()
@@ -39,10 +39,10 @@ if len(sys.argv) == 4:
 
     with open(ignored_words_file_name) as file_object:
         ignored_words_string = file_object.read()
-        ignored_words_string = ignored_words_string.split('\n')
+        ignored_words = ignored_words_string.split('\n')
 
     startTime = time.time()
-    word_counts, unimportant_word_counts = get_word_counts(document_string, ignored_words_string)
+    word_counts, unimportant_word_counts = get_word_counts(document_string, ignored_words)
     print("Counting words took %f seconds" % (time.time() - startTime))
 
     startTime = time.time()
