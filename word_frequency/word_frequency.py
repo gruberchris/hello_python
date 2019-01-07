@@ -45,7 +45,7 @@ def start():
             print('The specified input file %s does not exist' % (input_file_name))
             return
 
-    if len(sys.argv) == 4:
+    if len(sys.argv) >= 4:
         ignored_words_file_name = sys.argv[3]
 
         try:
