@@ -27,6 +27,8 @@ def get_n_most_frequent(word_counts, n):
     return sorted(word_counts, key=operator.itemgetter(1), reverse=True)[:n]
 
 def start():
+    number_of_most_frequent_words = 1
+    document_text = ''
     ignored_words = []
 
     if len(sys.argv) >= 2:
