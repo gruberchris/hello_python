@@ -14,7 +14,9 @@ def get_word_counts(words, ignored_words):
     unimportant_word_counts = {}
 
     for word in words.split():
-        processed_word = word.rstrip('!,.?:;-').lower()
+        processed_word = word.lstrip('([!,.?:;-)]')
+        processed_word = processed_word.rstrip('([!,.?:;-)]')
+        processed_word = processed_word.lower()
 
         if processed_word not in ignored_words:
             create_or_update_word(processed_word, word_counts)
